@@ -1,15 +1,15 @@
 package com.example.userauthenticationjwt;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * A test API to add behind the authentication wall
  */
-@Controller
+@RestController
 public class HelloResource {
 
-  @RequestMapping("/hello")
+  @GetMapping
   public String hello() {
     return "Hello, World!";
   }
