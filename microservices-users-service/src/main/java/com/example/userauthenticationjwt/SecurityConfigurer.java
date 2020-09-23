@@ -45,7 +45,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
    */
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
-    //@formatter:off
+    // @formatter:off
     httpSecurity
       .csrf().disable()
       .authorizeRequests()
@@ -54,7 +54,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
       .and().exceptionHandling()
       .and().sessionManagement()
       .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    //@formatter:on
+    // @formatter:on
 
     httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
   }
