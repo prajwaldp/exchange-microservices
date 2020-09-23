@@ -16,7 +16,7 @@ public class JWTUtility {
   private static String SECRET_KEY = "secret";
 
   private static Claims extractAllClaims(String claimsJwt) {
-    return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJwt(claimsJwt).getBody();
+    return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(claimsJwt).getBody();
   }
 
   private static <T> T extractClaim(String claimsJwt, Function<Claims, T> claimsResolver) {
