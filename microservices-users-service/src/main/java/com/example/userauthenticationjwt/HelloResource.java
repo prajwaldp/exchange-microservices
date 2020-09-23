@@ -1,7 +1,7 @@
 package com.example.userauthenticationjwt;
 
 import com.example.userauthenticationjwt.services.CustomUserDetailsService;
-import com.example.userauthenticationjwt.util.JWTTokenUtility;
+import com.example.userauthenticationjwt.util.JWTUtility;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,7 +40,7 @@ public class HelloResource {
     }
 
     final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-    final String jwt = JWTTokenUtility.generateToken(userDetails);
+    final String jwt = JWTUtility.generateToken(userDetails);
     return jwt;
   }
 }

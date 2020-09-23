@@ -33,13 +33,13 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     // Find the username from the Authorization header
     if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
       jwt = authorizationHeader.substring(7);
-      username = JWTTokenUtility.extractUsername(jwt);
+      username = JWTUtility.extractUsername(jwt);
     }
 
     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
-      if (JWTTokenUtility.validateToken(jwt, userDetails)) {
+      if (JWTUtility.validateToken(jwt, userDetails)) {
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
             userDetails, null, userDetails.getAuthorities());

@@ -11,7 +11,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-public class JWTTokenUtility {
+public class JWTUtility {
 
   private static String SECRET_KEY = "secret";
 
