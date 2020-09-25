@@ -13,7 +13,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class JWTUtility {
 
-  private static String SECRET_KEY = "secret";
+  private static String SECRET_KEY = System.getenv("SECRET_KEY");
 
   private static Claims extractAllClaims(String claimsJwt) {
     return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(claimsJwt).getBody();
