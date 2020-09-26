@@ -1,2 +1,3 @@
-# microservices-system-design
-Independent microservices for a blogging application
+# Microservices System Design
+
+Independent microservices for a blogging (or any social CRUD) application.
