@@ -31,4 +31,5 @@ $ ./services/kafka_2.13-2.6.0/bin/kafka-topics.sh --list \
 ```bash
 $ mvn clean compile
 $ mvn package
+$ java -jar target/clickstreamproducer-0.1.0.jar
 ```
