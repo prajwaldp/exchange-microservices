@@ -1,6 +1,3 @@
-[submodule "microservices-clickstream-analytics"]
-	path = microservices-clickstream-analytics
-	url = https://github.com/prajwaldp/microservices-clickstream-analytics
 [submodule "microservices-users-service"]
 	path = microservices-users-service
 	url = https://github.com/prajwaldp/microservices-users-service
