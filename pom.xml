@@ -11,6 +11,7 @@
     <name>my-microservices</name>
 
     <modules>
+        <module>gateway-server</module>
         <module>config-server</module>
         <module>discovery-server</module>
         <module>user-service</module>
