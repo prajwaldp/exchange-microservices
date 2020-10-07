@@ -1,13 +1,16 @@
 spring:
+  application:
+    name: gateway-server
+
   cloud:
     gateway:
       routes:
       - id: users_route
         uri: http://users:8001
         predicates:
-        - Path=/users/*
+        - Path=/users*
       
       - id: content_route
         uri: http://content:8002
         predicates:
-        - Path=/articles/*
+        - Path=/articles*

@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: users-service
+
+server:
+  port: 8001

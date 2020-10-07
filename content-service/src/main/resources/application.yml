@@ -1,0 +1,15 @@
+server:
+  port: 8002
+
+spring:
+  application:
+    name: content-service
+  
+  data:
+    cassandra:
+      keyspace-name: mykeyspace
+      port: 9042
+      contact-points: content_database
+      schema-action: create_if_not_exists
+      local-datacenter: datacenter1
+      entity-base-package: contentservice.models

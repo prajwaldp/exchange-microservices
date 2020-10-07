@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 services:
   gateway:
     image: hela/gateway-server:0.0.1-SNAPSHOT
@@ -30,6 +30,13 @@ services:
       - discovery
       - config
 
+  content_database:
+    image: cassandra:4.0
+    volumes:
+      - ./volumes/cassandra:/opt/cassandra
+    ports:
+      - 9042:9042
+
   content:
     image: hela/content-service:0.0.1-SNAPSHOT
     environment:
@@ -38,3 +45,4 @@ services:
     depends_on:
       - discovery
       - config
+      - content_database

@@ -13,8 +13,13 @@ import lombok.Setter;
 @Table
 public class Article {
 
-  @PrimaryKey
-  private String id;
+  @PrimaryKey private String id;
+  
   private String title;
   private String content;
+
+  @Override
+  public String toString() {
+  	return String.format("<Article title=`%s`, content=`%s`", this.getTitle(), this.getContent());
+  }
 }
