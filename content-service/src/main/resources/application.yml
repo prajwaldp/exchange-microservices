@@ -4,12 +4,16 @@ server:
 spring:
   application:
     name: content-service
-  
+
   data:
     cassandra:
-      keyspace-name: mykeyspace
+      keyspace-name: fictitiousstockexchange
       port: 9042
       contact-points: content_database
-      schema-action: create_if_not_exists
       local-datacenter: datacenter1
       entity-base-package: contentservice.models
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}

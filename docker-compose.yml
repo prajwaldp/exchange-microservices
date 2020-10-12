@@ -3,12 +3,12 @@ services:
   gateway:
     image: hela/gateway-server:0.0.1-SNAPSHOT
     ports:
-    - 8080:8080
-  
+      - 8080:8080
+
   discovery:
     image: hela/discovery-server:0.0.1-SNAPSHOT
     ports:
-    - 8761:8761
+      - 8761:8761
 
   config:
     image: hela/config-server:0.0.1-SNAPSHOT

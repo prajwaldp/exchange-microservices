@@ -1,11 +1,12 @@
 package contentservice.repositories;
 
+import org.springframework.data.cassandra.core.mapping.MapId;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.stereotype.Repository;
 
-import contentservice.models.Article;
+import contentservice.models.Bid;
 
 @Repository
-public interface ArticleRepository extends CassandraRepository<Article, String> {
+public interface BidRepository extends CassandraRepository<Bid, MapId> {
 
 }

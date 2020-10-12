@@ -5,12 +5,19 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: users_route
-        uri: http://users:8001
-        predicates:
-        - Path=/users*
-      
-      - id: content_route
-        uri: http://content:8002
-        predicates:
-        - Path=/articles*
+        - id: users_route
+          uri: http://users:8001
+          predicates:
+            - Path=/users*
+
+        - id: content_route
+          uri: http://content:8002
+          predicates:
+            - Path=/bids*
+            - Path=/asks*
+            - Path=/transfers*
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}
