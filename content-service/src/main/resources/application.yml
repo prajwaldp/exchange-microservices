@@ -12,8 +12,3 @@ spring:
       contact-points: content_database
       local-datacenter: datacenter1
       entity-base-package: contentservice.models
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}
