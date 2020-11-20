@@ -1,21 +1,35 @@
-# The Fictitious Stock Exchange
+# How to build an Exchange
 
-A simulation of a fictitious stock exchange.
+An implementation of an exchange based on the following:
+- https://www.youtube.com/watch?v=b1e4t2k2KJY
+- https://www.youtube.com/watch?v=dUMWMZmMsVE
 
-**What's different from the NYSE?**
+## Data Structures Used
 
-The Fictitious Stock Exchange handles companies from all over the world
+### 1. Limit Order Book (A NASDAQ Workstation Style Book)
 
-**Why?**
+- **Buys / Bids**: Best prices to buy, sorted in decreasing order
+- **Sales / Offers**: Best prices to sell, sorted in increasing order
 
-Because it's a good demonstration of the use of Cassandra partition keys.
+**Other entities:** Market Participants, Instruments
 
-## The Flow
+## Design Decisions
 
-1. Companies can register themselves on the Stock Exchange by specifying the
-   number of stocks and the ask price.
-2. Traders can buy or sell their stocks by providing a bid price or an ask price.
-3. The ownership of stocks change in near real-time.
+- Do we want to parallelize at the level of an instrument? i.e. maintain an orderbook datastructure for each instrument. Ocassionaly, we may want to touch two diffent instruments
+
+## Non-Functional Requirements
+
+1. Scale, (3M messages/s, 10k symbols)
+2. Fairness
+3. Reliability
+4. Durability
+
+## Microservices
+
+1. Matching Engine
+2. Canceller
+3. Trade Reporter
+4. Market Data (filtered versions of the raw transactions)
 
 ## Cassandra Data Modeling
 
