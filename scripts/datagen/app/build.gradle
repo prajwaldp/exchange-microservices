@@ -1,0 +1,29 @@
+plugins {
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id 'application'
+}
+
+repositories {
+    // Use JCenter for resolving dependencies.
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+    implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '2.6.0'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.3'
+}
+
+task datagen(type: Exec) {
+    dependsOn build
+    group = "Execution"
+    description = "Run the data generator with ExecTask"
+    commandLine "java", "-cp", sourceSets.main.runtimeClasspath.getAsPath(),
+        'datagen.RandomFeed'
+}
+
+application {
+    mainClass = 'datagen.App'
+}
