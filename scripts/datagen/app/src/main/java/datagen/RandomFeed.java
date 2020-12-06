@@ -8,11 +8,13 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,37 +29,51 @@ public class RandomFeed {
     private static Map<String, Double> prices = new HashMap<>();
     private static Random rand = new Random(42L);
 
+    static Logger log = LoggerFactory.getLogger(RandomFeed.class);
+
     private static Map<Integer, OrderType> orderTypes = new HashMap<>();
     static {
         orderTypes.put(0, OrderType.BUY);
         orderTypes.put(1, OrderType.SELL);
     }
 
-    public static void main(String[] args) {
-        buildSymbols();
-
-        for (int i = 0; i < 50; i++) {
-            run();
+    private static class Task implements Runnable {
+        @Override
+        public void run() {
+            log.info("Running task in thread {}", Thread.currentThread().getName());
+            int nSymbols = symbols.size();
+            int idx = rand.nextInt(nSymbols);
+            String symbol = symbols.get(idx);
+            Double price = prices.get(symbol);
+            double delta = Math.random();
+            int higher = rand.nextBoolean() ? 1 : -1;
+            double myPrice = price + (higher) * (delta / 100.0) * price;
+            OrderType orderType = orderTypes.get(rand.nextInt(2));
+            int quantity = rand.nextInt(1000);
+            Order o = new Order(symbol, orderType, myPrice, quantity);
+            OrdersController.submit(o);
         }
     }
 
-    static void run() {
-        int nSymbols = symbols.size();
-        int idx = rand.nextInt(nSymbols);
-        String symbol = symbols.get(idx);
-        Double price = prices.get(symbol);
-        double delta = Math.random();
-        int higher = rand.nextBoolean() ? 1 : -1;
-        double myPrice = price + (higher) * (delta / 100.0) * price;
-        OrderType orderType = orderTypes.get(rand.nextInt(2));
-        int quantity = rand.nextInt(1000);
-        Order o = new Order(symbol, orderType, myPrice, quantity);
-        OrdersController.submit(o);
+    public static void main(String[] args) {
+        buildSymbols();
+
+        int coreCount = Runtime.getRuntime().availableProcessors();
+        int nThreads = Math.max(4, coreCount);
+        ExecutorService service = Executors.newFixedThreadPool​(nThreads);
+
+        for (int i = 0; i < 50; i++) {
+            service.submit(new Task());
+        }
+
+        log.info("Submitted all tasks");
+        
+        service.shutdown();
+        while (!service.isTerminated());
+        log.info("Completed all tasks");
     }
 
     static void buildSymbols() {
-        Logger log = LoggerFactory.getLogger(Random.class);
-        
         URL inputFileURL = RandomFeed.class.getClassLoader().getResource("dow.txt");
         File inputFile = null;
         try {
