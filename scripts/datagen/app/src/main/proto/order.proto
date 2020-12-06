@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package datagen.generated;
+
+message Order {
+    string symbol = 1;
+    
+    enum OrderType {
+        BUY = 0;
+        SELL = 1;
+    }
+    OrderType orderType = 2;
+    
+    double price = 3;
+    
+    int32 quantity = 4;
+}

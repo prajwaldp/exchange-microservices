@@ -57,6 +57,9 @@ public class RandomFeed {
 
     public static void main(String[] args) {
         buildSymbols();
+        log.info("Built the symbol table");
+        KafkaAbstraction.startProducer();
+        log.info("Started the kafka producer");
 
         int coreCount = Runtime.getRuntime().availableProcessors();
         int nThreads = Math.max(4, coreCount);
@@ -71,6 +74,8 @@ public class RandomFeed {
         service.shutdown();
         while (!service.isTerminated());
         log.info("Completed all tasks");
+        KafkaAbstraction.closeProducer();
+        log.info("Closed the Kafka producer");
     }
 
     static void buildSymbols() {
