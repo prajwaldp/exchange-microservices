@@ -1,12 +1,14 @@
 {
   "routes": [
     {
-      "port": "localhost:8081",
-      "filters": "/users"
+      "server": "localhost:8081",
+      "filters": "/users",
+      "auth_required": true
     },
     {
-      "port": "localhost:8082",
-      "filters": "/articles"
+      "server": "localhost:8082",
+      "filters": "/articles",
+      "auth_required": false
     }
   ]
 }

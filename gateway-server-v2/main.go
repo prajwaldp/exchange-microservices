@@ -12,7 +12,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Print(config)
 	http.HandleFunc("/", gateway.Init(config))
 	log.Printf("Listening for requests on port %v\n", port)
 	log.Fatal(http.ListenAndServe(":" + port, nil))

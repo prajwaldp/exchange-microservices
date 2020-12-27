@@ -3,6 +3,7 @@ package gateway
 import (
 	"encoding/json"
 	"io/ioutil"
+	"log"
 )
 
 type Config struct {
@@ -10,8 +11,9 @@ type Config struct {
 }
 
 type Route struct {
-	Filters string
-	Port    string
+	Filters      string
+	Server       string
+	AuthRequired bool `json:"auth_required"`
 }
 
 func NewConfigFromFile(filepath string) (*Config, error) {
@@ -25,6 +27,8 @@ func NewConfigFromFile(filepath string) (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	log.Printf("Loaded config: %v", c)
 
 	return &c, nil
 }
