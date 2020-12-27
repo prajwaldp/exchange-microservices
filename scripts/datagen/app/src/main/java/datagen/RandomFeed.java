@@ -63,7 +63,7 @@ public class RandomFeed {
 
         int coreCount = Runtime.getRuntime().availableProcessors();
         int nThreads = Math.max(4, coreCount);
-        ExecutorService service = Executors.newFixedThreadPool​(nThreads);
+        ExecutorService service = Executors.newFixedThreadPool(nThreads);
 
         for (int i = 0; i < 50; i++) {
             service.submit(new Task());
