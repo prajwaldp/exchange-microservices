@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "port": "localhost:8081",
+      "filters": "/users"
+    },
+    {
+      "port": "localhost:8082",
+      "filters": "/articles"
+    }
+  ]
+}
