@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  </head>
+  <body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Stock Exchange Admin Page
+      </h1>
+      <p class="subtitle">
+        This is the <strong>admin</strong> page! So everyone shouldn't be seeing it.
+      </p>
+    </div>
+  </section>
+  <section class="section">
+    <div th:switch="${users}" class="container">
+        <div class="columns">
+            <div class="column">
+                <h2 th:case="null">No users yet!</h2>
+                <div th:case="*">
+                    <h2 class="is-size-3">Users</h2>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Password Hash</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.name}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td th:text="${user.password}"></td>
+                            <td>
+                                <a
+                                  th:href="@{/edit/{id}(id=${user.id})}"
+                                  class="button is-warning"
+                                >
+                                Edit
+                              </a>
+                            </td>
+                            <td>
+                                <a
+                                  th:href="@{/delete/{id}(id=${user.id})}"
+                                  class="button is-danger"
+                                >
+                                Delete
+                              </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <p class="mt-4">
+                  <a href="/signup" class="button is-primary">
+                    Add User
+                  </a>
+                </p>
+            </div>
+        </div>
+    </div>
+  </section>
+  </body>
+</html>

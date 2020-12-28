@@ -7,3 +7,5 @@ volumes
 .idea
 .gradle
 .project
+notes.txt
+gradle
