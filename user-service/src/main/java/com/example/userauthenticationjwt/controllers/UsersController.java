@@ -47,7 +47,7 @@ public class UsersController {
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        
+
         userRepository.save(user);
         return "redirect:/index";
     }
