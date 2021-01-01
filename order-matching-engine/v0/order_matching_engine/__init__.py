@@ -6,10 +6,11 @@ array (price_points), indexed by the numeric price value. Each
 
 import faust
 from typing import List
-from order_matching_engine.order_book_entry import OrderBookEntry
-from order_matching_engine.order import Order, OrderSide
-from order_matching_engine.price_point import PricePoint
-from order_matching_engine.limit_order_book import LimitOrderBook
+from .order_book_entry import OrderBookEntry
+from .order import Order, OrderSide
+from .price_point import PricePoint
+from .limit_order_book import LimitOrderBook
+from .trade import Trade
 
 
 class OrderMatchingEngine:
@@ -23,8 +24,6 @@ class OrderMatchingEngine:
         )
         self.orders_topic = self.app.topic(orders_topic)
 
-        self.curr_order_id: int = 0  # monotonically increasing order ID
-
         # Initialize the order books for the specified symbols
         # TODO Add support for inserting new symbols after starting the app
         self.order_books: dict[str, LimitOrderBook]
@@ -35,18 +34,18 @@ class OrderMatchingEngine:
         else:
             self.order_books = dict()
 
-    def process_order(self, order_: Order):
+    def process_order(self, order_: Order) -> List[Trade]:
         if order_.side == OrderSide.BUY:
-            self.__process_buy_order(order_)
+            return self.__process_buy_order(order_)
         else:
             assert order_.side == OrderSide.SELL
-            self.__process_sell_order(order_)
+            return self.__process_sell_order(order_)
 
-    def __process_buy_order(self, order_: Order):
-        self.order_books[order_.symbol].try_buy(order_.price, order_.size)
+    def __process_buy_order(self, order_: Order) -> List[Trade]:
+        return self.order_books[order_.symbol].try_buy(order_.price, order_.size, order_.trader_id)
 
     def __process_sell_order(self, order_: Order):
-        self.order_books[order_.symbol].try_sell(order_.price, order_.size)
+        return self.order_books[order_.symbol].try_sell(order_.price, order_.size, order_.trader_id)
 
     def start_listening(self):
         @self.app.agent(self.orders_topic)
